@@ -1,0 +1,9 @@
+[
+  {
+    "name": "NekoM550D",
+    "url": "https://github.com/ekrem6161/NekoM550D",
+    "fqbn": "arduino:avr:uno",
+    "firmwarePath": "firmware/NekoM550D",
+    "pcApp": "pc/NekoM550D.Monitor"
+  }
+]
