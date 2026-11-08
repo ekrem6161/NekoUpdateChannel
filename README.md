@@ -1,21 +1,21 @@
 # NekoUpdateChannel
 
-NekoHub uygulamasının **güncelleme kanalı**. NekoHub açılışta bu repodaki `repos.json` dosyasını indirir ve hangi projelerin yönetileceğini buradan öğrenir.
+The **update channel** for the NekoHub application. On startup, NekoHub downloads `repos.json` from this repository and learns which projects it should manage.
 
-- Ham dosya: `https://raw.githubusercontent.com/ekrem6161/NekoUpdateChannel/main/repos.json`
-- Yeni proje eklemek için sadece `repos.json`'a bir kayıt ekleyip `main` dalına push et.
+- Raw file: `https://raw.githubusercontent.com/ekrem6161/NekoUpdateChannel/main/repos.json`
+- To add a new project, append an entry to `repos.json` and push to `main`.
 
-## repos.json şeması
+## repos.json schema
 
-| Alan | Zorunlu | Açıklama |
+| Field | Required | Description |
 |---|---|---|
-| `name` | ✅ | Proje adı (klasör adı olarak da kullanılır) |
-| `url` | ✅ | GitHub repo adresi (ZIP ve `VERSION.TXT` buradan alınır) |
-| `fqbn` | ❌ | Arduino kart tipi, örn. `arduino:avr:uno`. Boşsa firmware yönetilmez |
-| `firmwarePath` | ❌ | Repo içindeki sketch klasörü, örn. `firmware/NekoM550D` |
-| `pcApp` | ❌ | Repo içindeki PC uygulaması klasörü, örn. `pc/NekoM550D.Monitor`. Boşsa PC yazılımı yönetilmez |
+| `name` | ✅ | Project name (also used as the folder name) |
+| `url` | ✅ | GitHub repository URL (ZIP and `VERSION.TXT` are fetched from here) |
+| `fqbn` | ❌ | Arduino board identifier, e.g. `arduino:avr:uno`. If empty, firmware is not managed |
+| `firmwarePath` | ❌ | Sketch folder inside the repo, e.g. `firmware/NekoM550D` |
+| `pcApp` | ❌ | PC application folder inside the repo, e.g. `pc/NekoM550D.Monitor`. If empty, the PC application is not managed |
 
-### Örnek
+### Example
 
 ```json
 [
@@ -29,18 +29,18 @@ NekoHub uygulamasının **güncelleme kanalı**. NekoHub açılışta bu repodak
 ]
 ```
 
-## Sürüm kuralı
+## Versioning rule
 
-Her proje reposunun **kökünde** `VERSION.TXT` bulunmalı ve içinde sadece sürüm numarası yazmalı:
+Every project repository must contain a `VERSION.TXT` file at its **root**, with only the version number inside:
 
 ```
 1.2.8
 ```
 
-NekoHub bu dosyayı kurulu sürümle karşılaştırır. Yeni sürüm yayınlamak = `VERSION.TXT` içeriğini artırıp push etmek.
+NekoHub compares this file against the installed version. Publishing a new release = bump the contents of `VERSION.TXT` and push.
 
-## Proje türleri
+## Project types
 
-- **Yalnız firmware:** `fqbn` + `firmwarePath` dolu, `pcApp` boş.
-- **Yalnız PC yazılımı:** `pcApp` dolu, `fqbn` ve `firmwarePath` boş.
-- **İkisi birlikte:** tüm alanlar dolu (ör. NekoM550D).
+- **Firmware only:** `fqbn` and `firmwarePath` set, `pcApp` empty.
+- **PC application only:** `pcApp` set, `fqbn` and `firmwarePath` empty.
+- **Both:** all fields set (e.g. NekoM550D).
